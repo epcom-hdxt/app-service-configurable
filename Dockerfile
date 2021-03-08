@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+# wp 20200308 mac update
 
 #build stage
 ARG BASE=golang:1.15-alpine3.12
