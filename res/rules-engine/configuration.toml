@@ -1,0 +1,69 @@
+[Writable]
+  LogLevel = "INFO"
+  [Writable.Pipeline]
+    ExecutionOrder = "SetOutputData"
+
+    [Writable.Pipeline.Functions.SetOutputData]
+      [Writable.Pipeline.Functions.SetOutputData.Parameters]
+        ResponseContentType = ""
+    [Writable.Pipeline.Functions.FilterByDeviceName]
+      [Writable.Pipeline.Functions.FilterByDeviceName.Parameters]
+        DeviceNames = ""
+        FilterOut = "false"
+    [Writable.Pipeline.Functions.FilterByValueDescriptor]
+      [Writable.Pipeline.Functions.FilterByValueDescriptor.Parameters]
+        ValueDescriptors = ""
+        FilterOut = "false"
+
+[Service]
+BootTimeout = "30s"
+CheckInterval = "10s"
+Host = "localhost"
+ServerBindAddr = "" # if blank, uses default Go behavior https://golang.org/pkg/net/#Listen
+Port = 48100
+Protocol = "http"
+ReadMaxLimit = 100
+StartupMsg = "AppService-rules-engine using ZMQ Message Bus has Started"
+Timeout = "5s"
+
+[Registry]
+Host = "localhost"
+Port = 8500
+Type = "consul"
+
+[Clients]
+  [Clients.CoreData]
+  Protocol = "http"
+  Host = "localhost"
+  Port = 48080
+
+[SecretStore]
+Host = 'localhost'
+Port = 8200
+Path = '/v1/secret/edgex/appservice/'
+Protocol = 'http'
+RootCaCertPath = ''
+ServerName = ''
+TokenFile = './vault/config/assets/resp-init.json'
+AdditionalRetryAttempts = 10
+RetryWaitPeriod = "1s"
+
+  [SecretStore.Authentication]
+  AuthType = 'X-Vault-Token'
+
+[Binding]
+Type="messagebus"
+SubscribeTopic="events"
+PublishTopic=""
+
+[MessageBus]
+Type = "zero"
+    [MessageBus.SubscribeHost]
+        Host = "localhost"
+        Port = 5563
+        Protocol = "tcp"
+    [MessageBus.PublishHost]
+        Host = "*"
+        Port = 5566
+        Protocol = "tcp"
+
